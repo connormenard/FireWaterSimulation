@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: vegOutline
+  m_Shader: {fileID: 4800000, guid: 661e565482aee0e49acd84943ffb38c2, type: 3}
+  m_ShaderKeywords: DBG_NONE
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 3e8019511e262814f81b5026cebc8b2a, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BmpMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 216f296a0eba3be408506c53d55c8f77, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _GITexture
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 0.004725135, y: 0.0061390265}
+          m_Offset: {x: 0.64553416, y: 0.5248552}
+      data:
+        first:
+          name: _OpacityTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _SrcBlend
+        second: 5
+      data:
+        first:
+          name: _DstBlend
+        second: 10
+      data:
+        first:
+          name: _Cutoff
+        second: 0.05
+      data:
+        first:
+          name: _ZWrite
+        second: 0
+      data:
+        first:
+          name: _ZTest
+        second: 2
+      data:
+        first:
+          name: _ColorMask
+        second: 15
+      data:
+        first:
+          name: _CutoffNear
+        second: 0.5
+      data:
+        first:
+          name: _BmpScale
+        second: 1
+      data:
+        first:
+          name: _Transmission
+        second: 1
+      data:
+        first:
+          name: _SpecPower
+        second: 56
+      data:
+        first:
+          name: _DirectOcclusionBoost
+        second: 0.3
+      data:
+        first:
+          name: _SpriteCameraUp
+        second: 1
+      data:
+        first:
+          name: _DensityFalloffDistance
+        second: 200
+      data:
+        first:
+          name: _PruneFreeDistance
+        second: 131.9
+      data:
+        first:
+          name: _PruneDistanceScale
+        second: 30
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 0.43901384, g: 0.5147059, b: 0.50530964, a: 1}
+      data:
+        first:
+          name: _PruneRefCountsSpriteMesh
+        second: {r: 700, g: 2200, b: 0, a: 0}

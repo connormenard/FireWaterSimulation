@@ -1,0 +1,73 @@
+﻿//NOTE:
+//This is my first compute shader. It's probably not too horrible
+//but there are clearly improvements to be made.
+//In particular an idea I got from a past GDC talk @ link:
+// http://twvideo01.ubm-us.net/o1/vault/GDC2014/Presentations/Gareth_Thomas_Compute-based_GPU_Particle.pdf
+//...is to have other code that manages this shader here to sort particles based on whether they're alive or dead.
+//This would conserve memory and processing power and all that jazz... 
+//but it's a tad advanced so I didn't have enough time to really delve into it.
+//
+//Much of where I learned this from was this video tutorial (and the one following it):
+//https://www.youtube.com/watch?v=qDk-WIOYUSY
+
+
+//First we need to specify which functions ("kernels") we will be running, there can be multiple
+#pragma kernel FireCSMain
+
+//Particle struct... yet again matching what's in C# and the .shader
+struct Particle
+{
+	float3 position;
+	float3 velocity;
+	float3 startPosition;
+	float3 startVelocity;
+	float3 prevPosition;
+	float startTime;
+};
+
+//Read-Write buffer to match the others
+RWStructuredBuffer<Particle> particleBuffer;
+
+//We'll get deltaTime from C# every frame to do calculations
+float dt;
+//We'll get fixedTime from there too
+float totalTime;
+//If time time gets past this plus the start time, then restart the particle
+float restartTime;
+
+//Specify number of threads we're going to borrow from the GPU
+[numthreads(256 , 1 , 1)]
+void FireCSMain (uint3 id : SV_DispatchThreadID)
+{
+	//Only update particle if it's time to go
+	if (totalTime > particleBuffer[id.x].startTime) {
+		//Update previous position
+		particleBuffer[id.x].prevPosition = particleBuffer[id.x].position;
+		//Update velocity (just gravity for now)
+		particleBuffer[id.x].velocity += float3(0.0f , -0.0098f , 0.0f);
+		//Update position
+		particleBuffer[id.x].position += particleBuffer[id.x].velocity * dt;
+		//If beneath the starting position, kill particle (effectively) until needed again
+		if (particleBuffer[id.x].position.y < particleBuffer[id.x].startPosition.y) {
+			particleBuffer[id.x].position = particleBuffer[id.x].startPosition;
+			//Check if we need to restart
+			if (totalTime + particleBuffer[id.x].startTime > totalTime) {
+				particleBuffer[id.x].velocity = particleBuffer[id.x].startVelocity;
+			}
+			//Otherwise don't really do anything
+			//Perhaps a better way of handling this
+			else {
+				particleBuffer[id.x].velocity = float3(0.0f , 0.0f , 0.0f);
+			}
+		}
+	}
+}
+
+//Crazy wild random function from:
+//https://gamedev.stackexchange.com/questions/32681/random-number-hlsl
+//... which apparently I won't end up using anymore because it's really bad practice!
+//The better practice is to do this on the C# side, so I did that instead
+float rando(in float2 uv) {
+	float2 noise = (frac(sin(dot(uv , float2(12.9898 , 78.233)*2.0)) * 43758.5453));
+	return abs(noise.x + noise.y) * 0.5;
+}
